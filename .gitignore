@@ -6,4 +6,4 @@ npm-debug.log
 node_modules
 
 # Build Artifacts
-/addon/out
+# /addon/out
