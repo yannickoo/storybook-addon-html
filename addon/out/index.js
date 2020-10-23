@@ -8,6 +8,7 @@ var _html = require("./decorators/html");
 
 Object.keys(_html).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _html[key]) return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {

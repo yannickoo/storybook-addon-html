@@ -7,6 +7,10 @@ exports.withHTML = void 0;
 
 var _global = require("global");
 
+var _templateResult = require("lit-html/lib/template-result");
+
+var _litHtml = require("lit-html");
+
 var _addons = require("@storybook/addons");
 
 var _ = require(".");
@@ -33,6 +37,18 @@ var withHTML = (0, _addons.makeDecorator)(_objectSpread(_objectSpread({}, _.para
       html = element;
     } else if (element instanceof _global.Node) {
       html = element.outerHTML;
+    } else if (element instanceof _templateResult.TemplateResult) {
+      var tabContent = _global.document.createElement('div');
+
+      _global.document.body.appendChild(tabContent);
+
+      if (tabContent) {
+        (0, _litHtml.render)(element, tabContent);
+        html = tabContent.innerHTML.replace(/<!---->/g, '').replace(/([a-z-])+="\s*"/g, function (a) {
+          return a.replace('=""', '');
+        });
+        tabContent.remove();
+      }
     }
 
     channel.emit(_shared.EVENT_CODE_RECEIVED, {
